@@ -1,63 +1,107 @@
 const axios = require('axios');
-
+ 
+async function handleCommand(api, event, args, message) {
+  try {
+    const question = args.join(" ").trim();
+ 
+    if (!question) {
+      return message.reply("Please provide a question. Example: {p} cmdName {your question}");
+    }
+ 
+    const response = await getAnswerFromAI(question);
+ 
+    if (response) {
+      message.reply(response);
+    } else {
+      message.reply("Failed to get an answer. Please try again later.");
+    }
+  } catch (error) {
+    console.error("Error in handleCommand:", error.message);
+    message.reply("An error occurred while processing your request.");
+  }
+}
+ 
+async function getAnswerFromAI(question) {
+  try {
+    const url = 'https://sandipapi.onrender.com/gpt';
+    const { data } = await axios.get(url, { params: { prompt: question } });
+ 
+    if (data && (data.gpt4 || data.reply || data.response || data.answer || data.message)) {
+      const answer = data.gpt4 || data.reply || data.response || data.answer || data.message;
+      console.log("AI Response:", answer);
+      return answer;
+    } else {
+      throw new Error("No valid response from AI");
+    }
+  } catch (error) {
+    console.error("Error in getAnswerFromAI:", error.message);
+    throw new Error("Failed to get AI response");
+  }
+}
+ 
 async function fetchFromAI(url, params) {
   try {
     const response = await axios.get(url, { params });
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error("Network Error:", error.message);
     return null;
   }
 }
-
+ 
 async function getAIResponse(input, userId, messageID) {
+  const query = input.trim() || "hi";
   const services = [
-    { url: 'https://ai-tools.replit.app/gpt', params: { prompt: input, uid: userId } },
-    { url: 'https://openaikey-x20f.onrender.com/api', params: { prompt: input } },
-    { url: 'http://fi1.bot-hosting.net:6518/gpt', params: { query: input } },
-    { url: 'https://ai-chat-gpt-4-lite.onrender.com/api/hercai', params: { question: input } }
+    { url: 'https://gpt-four.vercel.app/gpt', params: { prompt: query, uid: query } }
   ];
-
-  let response = "𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧 𝗜𝗦 𝗔𝗟𝗜𝗩𝗘 🪄✅.";
-  let currentIndex = 0;
-
-  for (let i = 0; i < services.length; i++) {
-    const service = services[currentIndex];
-    const data = await fetchFromAI(service.url, service.params);
-    if (data && (data.gpt4 || data.reply || data.response)) {
-      response = data.gpt4 || data.reply || data.response;
-      break;
+ 
+  try {
+    for (const service of services) {
+      const data = await fetchFromAI(service.url, service.params);
+ 
+      if (data && (data.gpt4 || data.reply || data.response || data.answer || data.message)) {
+        const response = data.gpt4 || data.reply || data.response || data.answer || data.message;
+        return { response, messageID };
+      }
     }
-    currentIndex = (currentIndex + 1) % services.length; // Move to the next service in the cycle
+ 
+    throw new Error("No valid response from any AI service");
+  } catch (error) {
+    console.error("Error in getAIResponse:", error.message);
+    throw error;
   }
-
-  return { response, messageID };
 }
-
+ 
 module.exports = {
   config: {
     name: 'ai',
-    author: 'Arn',
+    author: 'coffee',
     role: 0,
     category: 'ai',
-    shortDescription: 'ai to ask anything',
+    shortDescription: 'AI to answer any question',
   },
   onStart: async function ({ api, event, args }) {
     const input = args.join(' ').trim();
-    if (!input) {
-      api.sendMessage(`𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧 𝗔𝗡𝗦𝗪𝗘𝗥𝗘𝗗✅\n━━━━━━━━━━━━━━━━\nPlease provide a question or statement.\n━━━━━━━━━━━━━━━━`, event.threadID, event.messageID);
-      return;
+    try {
+      const { response, messageID } = await getAIResponse(input, event.senderID, event.messageID);
+      api.sendMessage(`🧋✨ | 𝙼𝚘𝚌𝚑𝚊 𝙰𝚒\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
+    } catch (error) {
+      console.error("Error in onStart:", error.message);
+      api.sendMessage("An error occurred while processing your request.", event.threadID);
     }
-
-    const { response, messageID } = await getAIResponse(input, event.senderID, event.messageID);
-    api.sendMessage(`𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧 𝗔𝗡𝗦𝗪𝗘𝗥𝗘𝗗✅ \n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
   },
   onChat: async function ({ event, message }) {
     const messageContent = event.body.trim().toLowerCase();
     if (messageContent.startsWith("ai")) {
       const input = messageContent.replace(/^ai\s*/, "").trim();
-      const { response, messageID } = await getAIResponse(input, event.senderID, message.messageID);
-      message.reply(`𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧 𝗔𝗡𝗦𝗪𝗘𝗥𝗘𝗗✅\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, messageID);
+      try {
+        const { response, messageID } = await getAIResponse(input, event.senderID, message.messageID);
+        message.reply(`🧋✨ | 𝙼𝚘𝚌𝚑𝚊 𝙰𝚒\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, messageID);
+      } catch (error) {
+        console.error("Error in onChat:", error.message);
+        message.reply("An error occurred while processing your request.");
+      }
     }
-  }
+  },
+  handleCommand // Export the handleCommand function for command-based interactions
 };
