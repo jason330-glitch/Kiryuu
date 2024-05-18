@@ -233,6 +233,7 @@ module.exports = {
 │ - Gpt
 │ - Gemini
 │ - Google
+│ - Bard
 ╰─━━━━━━━━━╾─╯
 ╭─╼━━━━━━━━╾─╮
 │  🗨 | 𝙰𝚒 - 𝙲𝚑𝚊𝚝 
