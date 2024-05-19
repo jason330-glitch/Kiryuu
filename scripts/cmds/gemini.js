@@ -134,7 +134,7 @@ async function l({ api, message, event, args }) {
     }
 
     if (!n) {
-      return message.reply("Please provide a prompt.");
+      return message.reply("👨🏻‍💻 | 𝙶𝚎𝚖𝚒𝚗𝚒 |.");
     }
 
     if (draw) {
