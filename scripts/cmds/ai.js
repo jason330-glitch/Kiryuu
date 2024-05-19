@@ -84,7 +84,7 @@ module.exports = {
     const input = args.join(' ').trim();
     try {
       const { response, messageID } = await getAIResponse(input, event.senderID, event.messageID);
-      api.sendMessage(`🧋✨ | 𝙼𝚘𝚌𝚑𝚊 𝙰𝚒\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
+      api.sendMessage(`𝙰𝙸 𝙰𝚂𝚂𝙸𝚂𝚃𝙰𝙽𝚃\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, event.threadID, messageID);
     } catch (error) {
       console.error("Error in onStart:", error.message);
       api.sendMessage("An error occurred while processing your request.", event.threadID);
@@ -96,7 +96,7 @@ module.exports = {
       const input = messageContent.replace(/^ai\s*/, "").trim();
       try {
         const { response, messageID } = await getAIResponse(input, event.senderID, message.messageID);
-        message.reply(`🧋✨ | 𝙼𝚘𝚌𝚑𝚊 𝙰𝚒\n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, messageID);
+        message.reply(`𝙰𝙸 𝙰𝚂𝚂𝙸𝚂𝚃𝙰𝙽𝚃 \n━━━━━━━━━━━━━━━━\n${response}\n━━━━━━━━━━━━━━━━`, messageID);
       } catch (error) {
         console.error("Error in onChat:", error.message);
         message.reply("An error occurred while processing your request.");
