@@ -227,11 +227,12 @@ module.exports = {
 ╭─╼━━━━━━━━╾─╮
 │  📖 | 𝙴𝚍𝚞𝚌𝚊𝚝𝚒𝚘𝚗
 │ - Ai
-│ - Translate
 │ - Claire
 │ - Nica
 │ - Gpt
+│ - Gpt4
 │ - Google
+│ - Box
 ╰─━━━━━━━━━╾─╯
 ╭─╼━━━━━━━━╾─╮
 │  🗨 | 𝙰𝚒 - 𝙲𝚑𝚊𝚝 
