@@ -1,7 +1,7 @@
 {
   "facebookAccount": {
-    "email": "raishinsama8@gmail.com",
-    "password": "@raishinsama09",
+    "email": "yojegox144@haislot.com",
+    "password": "@raishin@",
     "2FASecret": "",
     "i_user": "",
     "proxy": null,
@@ -24,7 +24,7 @@
     "whiteListIds": [],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "》 - 《 ❃ ➠𝗜𝘀𝗮𝗺𝘂",
+  "nickNameBot": "》 - 《 ❃ ➠𝖢𝗅𝖺𝗂𝗋𝖾",
   "prefix": "-",
   "database": {
     "type": "sqlite",
