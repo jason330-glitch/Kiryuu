@@ -230,9 +230,7 @@ module.exports = {
 │ - Claire
 │ - Nica
 │ - Gpt
-│ - Gpt4
 │ - Google
-│ - Box
 │ - Gemini
 ╰─━━━━━━━━━╾─╯
 ╭─╼━━━━━━━━╾─╮
@@ -243,7 +241,6 @@ module.exports = {
 │  🖼 | 𝙸𝚖𝚊𝚐𝚎
 │ - Pinterest
 │ - Remini
-│ - Imagine
 ╰─━━━━━━━━━╾─╯
 ╭─╼━━━━━━━━╾─╮
 │  🎧 | 𝙼𝚞𝚜𝚒𝚌
@@ -259,7 +256,6 @@ module.exports = {
 │ - Uid
 │ - Unsend
 │ - Uptime
-│ - Anivid
 │ - Callad
 │ - Usage
 │ - Setname
@@ -281,8 +277,7 @@ module.exports = {
 │ - Accept
 ╰─━━━━━━━━━╾─╯
 •Type -help <command name>
-to see all commands.
-information and usage
+to see how to use the command.
 
 •Rules to follow during your stay:
 ➪ No Inappropriate language 
